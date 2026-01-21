@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* Custom Overrides from previous style.css */
+
+/* Scanner Specifics */
+.aspect-square { aspect-ratio: 1 / 1; }
+
+/* FIX: Prevent white box on scanner initialization */
+/* Now handled by Tailwind utility classes in HTML */
+#reader {
+    background-color: transparent !important;
+}
+
+/* Generator Specifics - Form Elements Override for consistency */
+input[type="text"], input[type="file"], textarea, select {
+    display: block; 
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+    background: #fff;
+}
+input:focus, textarea:focus, select:focus {
+    outline: 2px solid #2563eb;
+    border-color: transparent;
+}
+
+/* Print Overrides */
+@media print {
+    body { background: white !important; color: black !important; }
+    .no-print { display: none !important; }
+    .shadow-md, .shadow-2xl { box-shadow: none !important; }
+    #qr-container { display: grid !important; }
+}

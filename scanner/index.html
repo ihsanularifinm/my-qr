@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MikroTik Hotspot - Secure QR Scanner</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/qr-code.svg">
+    <meta name="description" content="Secure QR Code Scanner for Hotspot Login">
+    
+    <!-- Custom Local CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- QR Library -->
+    <script src="../js/html5-qrcode.min.js" type="text/javascript"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 p-6 sm:p-8 text-center animate-fade-in-up relative overflow-hidden">
+        
+        <!-- Header -->
+        <div class="mb-6 z-10 relative">
+            <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">QR Scanner</h2>
+            <p class="text-gray-400 text-sm mt-1">Scan QR or Upload QR Image</p>
+        </div>
+
+        <!-- Scanner / Placeholder Area -->
+        <div class="relative w-full aspect-square bg-gray-900/50 rounded-2xl overflow-hidden border-2 border-dashed border-gray-600 mb-6 shadow-inner flex flex-col items-center justify-center group transition-all duration-300" id="scanner-wrapper">
+             
+             <!-- Icons for Placeholder -->
+             <div id="placeholder-icon" class="text-gray-600 mb-3 transition-opacity">
+                <!-- Heroicon: qr-code -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-16 w-16 opacity-50">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 3.75 9.375v-4.5ZM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 0 1-1.125-1.125v-4.5ZM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0 1 13.5 9.375v-4.5Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75ZM6.75 16.5h.75v.75h-.75v-.75ZM16.5 6.75h.75v.75h-.75v-.75ZM13.5 13.5h.75v.75h-.75v-.75ZM13.5 19.5h.75v.75h-.75v-.75ZM19.5 13.5h.75v.75h-.75v-.75ZM19.5 19.5h.75v.75h-.75v-.75ZM16.5 16.5h.75v.75h-.75v-.75Z" />
+                </svg>
+             </div>
+             
+             <!-- The Scanner Element: Using Tailwind Arbitrary Variants to style injected video -->
+             <div id="reader" class="w-full h-full absolute inset-0 hidden [&_video]:!w-full [&_video]:!h-full [&_video]:!object-cover [&_video]:!rounded-2xl [&_video]:!bg-transparent [&_canvas]:!hidden"></div>
+        </div>
+
+        <!-- Status Message (Moved Outside) -->
+        <p id="status-msg" class="text-xs text-center text-gray-500 font-medium mb-6 animate-pulse">Camera is inactive</p>
+
+        <!-- Controls -->
+        <div class="space-y-3 z-10 relative">
+            
+            <!-- Toggle Camera Button -->
+            <button id="toggle-camera-btn" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-blue-900/20 transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer">
+                <!-- Heroicon: video-camera -->
+                <svg id="cam-icon-on" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                <span id="toggle-btn-text">Start Camera</span>
+            </button>
+
+            <!-- File Upload Button -->
+            <input type="file" id="qr-input-file" accept="image/*" class="hidden !hidden">
+            <button id="upload-btn" class="w-full py-3 px-4 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white font-medium rounded-xl transition-all duration-200 border border-gray-600 border-dashed hover:border-gray-500 flex items-center justify-center gap-2 cursor-pointer">
+                <!-- Heroicon: photo -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                <span>Scan Image File</span>
+            </button>
+            
+        </div>
+
+    </div>
+
+    <script src="js/app.js"></script>
+    
+    <style>
+        .animate-fade-in-up { animation: fadeInUp 0.5s ease-out; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Hide HTML5-QRCode Default Overlays if they pop up */
+        #reader__dashboard_section_csr span { display: none !important; }
+    </style>
+</body>
+</html>
