@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'card_scanner_desc': 'Secure QR Code Scanner for Hotspot Login. Supports manual camera control and file upload.',
             'card_generator_title': 'QR Generator',
             'card_generator_desc': 'Create QR Code Vouchers for Hotspot users instantly in bulk or single mode.',
-            'footer_text': 'MikroTik Hotspot Tools'
+            'footer_text': 'QR Code Tools'
         },
         id: {
             'page_title': 'Alat Kode QR',
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'card_scanner_desc': 'Pemindai QR Code aman untuk Login Hotspot. Mendukung kontrol kamera manual dan unggah file.',
             'card_generator_title': 'Pembuat QR',
             'card_generator_desc': 'Buat Voucher QR Code untuk pengguna Hotspot secara instan (massal/satuan).',
-            'footer_text': 'Alat Hotspot MikroTik'
+            'footer_text': 'Alat Kode QR'
         }
     };
 
