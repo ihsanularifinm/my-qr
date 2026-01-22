@@ -3,6 +3,20 @@
   Access-Control-Allow-Methods: GET, HEAD, OPTIONS
   Access-Control-Allow-Headers: Content-Type, Cache-Control, Pragma, Expires
 
+/beacon.html
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0
+  Pragma: no-cache
+  Expires: 0
+  CDN-Cache-Control: no-store
+
+/check.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0, s-maxage=0
+  Pragma: no-cache
+  Expires: 0
+  CDN-Cache-Control: no-store
+
 /assets/*
   Access-Control-Allow-Origin: *
   Cache-Control: no-cache, no-store, must-revalidate
