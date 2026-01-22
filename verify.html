@@ -15,16 +15,27 @@
         <p>Connection Verified</p>
     </div>
 <script>
-// Second check - send verify message to parent
-if (window.parent && window.parent !== window) {
-    window.parent.postMessage({
+// Second check - send verify message to parent/top
+(function() {
+    const message = {
         type: 'wg-verify',
         status: 'ok',
         step: 2,
         timestamp: Date.now()
-    }, '*');
-    console.log('[WG Verify] Verification message sent to parent');
-}
+    };
+    
+    console.log('[WG Verify] Sending verification message...');
+    
+    // Try both parent and top to ensure message is received
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage(message, '*');
+        console.log('[WG Verify] Sent to window.parent');
+    }
+    if (window.top && window.top !== window && window.top !== window.parent) {
+        window.top.postMessage(message, '*');
+        console.log('[WG Verify] Sent to window.top');
+    }
+})();
 </script>
 </body>
 </html>
