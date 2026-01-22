@@ -18,6 +18,13 @@
 
     <div class="w-full max-w-md bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 p-6 sm:p-8 text-center animate-fade-in-up relative overflow-hidden">
         
+        <!-- Back Button -->
+        <a href="../" class="absolute top-4 left-4 p-2 text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded-full transition-all z-20" title="Back Home">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+        </a>
+        
         <!-- Header -->
         <div class="mb-6 z-10 relative">
             <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">QR Scanner</h2>
@@ -84,6 +91,8 @@
     <!-- WG Check: Send message to parent when page loads (for iframe detection) -->
     <script>
     (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isCheckMode = urlParams.has('check');
         const inIframe = window.parent && window.parent !== window;
         
         if (inIframe) {
@@ -91,10 +100,17 @@
             window.parent.postMessage({
                 type: 'scanner-ready',
                 status: 'ok',
-                step: 1,
                 timestamp: Date.now()
             }, '*');
             console.log('[Scanner] Ready message sent to parent');
+            
+            // If in check mode, navigate to root after 1 second for step 2 verification
+            if (isCheckMode) {
+                setTimeout(function() {
+                    console.log('[Scanner] Navigating to root for step 2 verification...');
+                    window.location.href = '../?check=1&t=' + Date.now();
+                }, 1000);
+            }
         }
     })();
     </script>
