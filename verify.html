@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WG Verify</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+</head>
+<body style="background: #1e293b; color: #10b981; font-family: system-ui; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0;">
+    <div style="text-align: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 48px; height: 48px; margin-bottom: 10px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p>Connection Verified</p>
+    </div>
+<script>
+// Second check - send verify message to parent
+if (window.parent && window.parent !== window) {
+    window.parent.postMessage({
+        type: 'wg-verify',
+        status: 'ok',
+        step: 2,
+        timestamp: Date.now()
+    }, '*');
+    console.log('[WG Verify] Verification message sent to parent');
+}
+</script>
+</body>
+</html>

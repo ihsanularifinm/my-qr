@@ -83,15 +83,31 @@
     
     <!-- WG Check: Send message to parent when page loads (for iframe detection) -->
     <script>
-    if (window.parent && window.parent !== window) {
-        // In iframe - send ready message to parent
-        window.parent.postMessage({
-            type: 'scanner-ready',
-            status: 'ok',
-            timestamp: Date.now()
-        }, '*');
-        console.log('[Scanner] Ready message sent to parent');
-    }
+    (function() {
+        // Check if we're in iframe check mode
+        const urlParams = new URLSearchParams(window.location.search);
+        const isCheckMode = urlParams.has('check');
+        const inIframe = window.parent && window.parent !== window;
+        
+        if (inIframe) {
+            // Send scanner-ready message
+            window.parent.postMessage({
+                type: 'scanner-ready',
+                status: 'ok',
+                step: 1,
+                timestamp: Date.now()
+            }, '*');
+            console.log('[Scanner] Ready message sent to parent (step 1)');
+            
+            // If in check mode, redirect to verify.html after 1 second for second check
+            if (isCheckMode) {
+                setTimeout(function() {
+                    console.log('[Scanner] Redirecting to verify.html for step 2...');
+                    window.location.href = '../verify.html?t=' + Date.now();
+                }, 1000);
+            }
+        }
+    })();
     </script>
 </body>
 </html>
