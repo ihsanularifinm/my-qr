@@ -88,31 +88,7 @@
         #reader__dashboard_section_csr span { display: none !important; }
     </style>
     
-    <!-- WG Check: Send message to parent when page loads (for iframe detection) -->
-    <script>
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isCheckMode = urlParams.has('check');
-        const inIframe = window.parent && window.parent !== window;
-        
-        if (inIframe) {
-            // Send scanner-ready message
-            window.parent.postMessage({
-                type: 'scanner-ready',
-                status: 'ok',
-                timestamp: Date.now()
-            }, '*');
-            console.log('[Scanner] Ready message sent to parent');
-            
-            // If in check mode, navigate to root after 1 second for step 2 verification
-            if (isCheckMode) {
-                setTimeout(function() {
-                    console.log('[Scanner] Navigating to root for step 2 verification...');
-                    window.location.href = '../?check=1&t=' + Date.now();
-                }, 1000);
-            }
-        }
-    })();
-    </script>
+    <!-- Custom Logic -->
+    <script src="../js/app.js"></script>
 </body>
 </html>

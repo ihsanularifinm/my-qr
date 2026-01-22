@@ -98,17 +98,7 @@
         </footer>
     </div>
     
-    <!-- WG Check: Send message to parent when loaded in iframe -->
-    <script>
-    if (window.parent && window.parent !== window) {
-        window.parent.postMessage({
-            type: 'root-ready',
-            status: 'ok',
-            timestamp: Date.now()
-        }, '*');
-        console.log('[Root] Ready message sent to parent');
-    }
-    </script>
+
     <script src="js/app.js"></script>
 </body>
 </html>
