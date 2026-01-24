@@ -19,7 +19,7 @@
     <div class="w-full max-w-md bg-gray-800/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-700/50 p-6 sm:p-8 text-center animate-fade-in-up relative overflow-hidden">
         
         <!-- Back Button -->
-        <a href="../" class="absolute top-4 left-4 p-2 text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded-full transition-all z-20" title="Back Home">
+        <a href="#" id="back-btn" class="absolute top-4 left-4 p-2 text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded-full transition-all z-20" title="Back Home">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
             </svg>
@@ -32,7 +32,7 @@
         </div>
 
         <!-- Scanner / Placeholder Area -->
-        <div class="relative w-full aspect-square bg-gray-900/50 rounded-2xl overflow-hidden border-2 border-dashed border-gray-600 mb-6 shadow-inner flex flex-col items-center justify-center group transition-all duration-300" id="scanner-wrapper">
+        <div class="relative w-full aspect-square bg-gray-900/50 rounded-2xl overflow-hidden border-2 border-dashed border-gray-600 shadow-inner flex flex-col items-center justify-center group transition-all duration-300" id="scanner-wrapper">
              
              <!-- Icons for Placeholder -->
              <div id="placeholder-icon" class="text-gray-600 mb-3 transition-opacity">
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Status Message (Moved Outside) -->
-        <p id="status-msg" class="text-xs text-center text-gray-500 font-medium mb-6 animate-pulse">Camera is inactive</p>
+        <p id="status-msg" class="text-xs text-center text-gray-500 font-medium my-6 animate-pulse">Camera is inactive</p>
 
         <!-- Controls -->
         <div class="space-y-3 z-10 relative">

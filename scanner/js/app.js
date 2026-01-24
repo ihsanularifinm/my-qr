@@ -22,6 +22,19 @@ try {
     console.warn("Invalid Return URL");
 }
 
+// BACK BUTTON LOGIC
+const backBtn = document.getElementById('back-btn');
+if (backBtn) {
+    backBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (validReturnUrl) {
+            window.location.href = returnUrl;
+        } else {
+            window.location.href = "../";
+        }
+    });
+}
+
 // 1. TOGGLE CAMERA
 toggleBtn.addEventListener('click', () => {
     if (!isCameraRunning) {
