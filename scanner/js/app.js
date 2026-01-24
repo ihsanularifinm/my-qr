@@ -22,7 +22,7 @@ window.translations = {
         scan_status_inactive: 'Kamera tidak aktif',
         btn_start_camera: 'Mulai Kamera',
         btn_stop_camera: 'Hentikan Kamera',
-        btn_upload_qr: 'Pindai File Gambar',
+        btn_upload_qr: 'Pindai Berkas Gambar',
         scan_file_scanning: 'Memindai file...',
         scan_no_qr: 'Tidak ada kode QR ditemukan.',
         scan_success: 'Kode QR Ditemukan!',
